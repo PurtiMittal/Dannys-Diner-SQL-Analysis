@@ -9,8 +9,8 @@ The goal of this project is to act as a Lead Data Analyst for a start-up restaur
 By using T-SQL, I transformed raw tables into actionable insights that Danny can use to decide whether to expand the existing loyalty program.
 
 **Technical Stack:**
-Engine: Microsoft SQL Server (T-SQL)
 
+Engine: Microsoft SQL Server (T-SQL);
 Key Techniques: CTEs, Window Functions (DENSE_RANK), Joins and CASE Statements.
 
 **Business Conclusions & Insights:**
