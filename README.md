@@ -10,6 +10,7 @@ By using T-SQL, I transformed raw tables into actionable insights that Danny can
 
 **Technical Stack:**
 Engine: Microsoft SQL Server (T-SQL)
+
 Key Techniques: CTEs, Window Functions (DENSE_RANK), Joins and CASE Statements.
 
 **Business Conclusions & Insights:**
