@@ -40,10 +40,10 @@ This is Case Study #1 from Danny Ma's [8 Week SQL Challenge](https://8weeksqlcha
 
    Simple join between sales and menu, grouped by customer.
 
-       SELECT s.customer_id, SUM(m.price) AS total_spent
-       FROM sales s
-       INNER JOIN menu m ON s.product_id = m.product_id
-       GROUP BY s.customer_id;
+		SELECT s.customer_id, SUM(m.price) AS total_spent
+       	FROM sales s
+       	INNER JOIN menu m ON s.product_id = m.product_id
+       	GROUP BY s.customer_id;
 
    Analysis - Customer A & B are primary drivers of the revenue, representing highest total spendings while customer C's contribution to the revenue is quite low. 
 
@@ -51,7 +51,7 @@ This is Case Study #1 from Danny Ma's [8 Week SQL Challenge](https://8weeksqlcha
 2. How many days has each customer visited the restaurant?
 
   Used COUNT(DISTINCT order_date) - a deliberate choice over COUNT(*) to avoid double counting same day multiple orders as separate visits
-
+		```sql
         SELECT customer_id, COUNT(DISTINCT order_date) AS days_visited
         FROM sales
         GROUP BY customer_id;
@@ -63,8 +63,8 @@ This is Case Study #1 from Danny Ma's [8 Week SQL Challenge](https://8weeksqlcha
 
   Used DENSE_RANK() over order_date partitioned by customer. Also built an alternate presentation using STRING_AGG() to handle cases where a customer ordered multiple items on the same first day.
 
-    WITH cte AS
-    (SELECT s.customer_id, m.product_name, DENSE_RANK() OVER(PARTITION BY s.customer_id ORDER BY order_date) AS rn 
+    	WITH cte AS
+    	(SELECT s.customer_id, m.product_name, DENSE_RANK() OVER(PARTITION BY s.customer_id ORDER BY order_date) AS rn 
     FROM sales s
     INNER JOIN menu m ON s.product_id = m.product_id)
 
