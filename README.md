@@ -41,55 +41,59 @@ This is Case Study #1 from Danny Ma's [8 Week SQL Challenge](https://8weeksqlcha
    ##### Simple join between sales and menu, grouped by customer.
 
 ```sql
-		SELECT s.customer_id, SUM(m.price) AS total_spent
-       	FROM sales s
-       	INNER JOIN menu m ON s.product_id = m.product_id
-       	GROUP BY s.customer_id;
+	SELECT s.customer_id, SUM(m.price) AS total_spent
+	FROM sales s
+	INNER JOIN menu m ON s.product_id = m.product_id
+	GROUP BY s.customer_id;
 ```
 
    *Analysis - Customer A & B are primary drivers of the revenue, representing highest total spendings while customer C's contribution to the revenue is quite low.*
 
 
-
 **2. How many days has each customer visited the restaurant?**
 
   ##### Used COUNT(DISTINCT order_date) - a deliberate choice over COUNT(*) to avoid double counting same day multiple orders as separate visits
-	```sql
+
+```sql
         SELECT customer_id, COUNT(DISTINCT order_date) AS days_visited
         FROM sales
         GROUP BY customer_id;
-	 ```
+```
   
   *Analysis: Customers A & B are more frequent visitors compared to Customer C, who has visited only twice. This aligns with previous observation regarding contribution to revenue.*
 
 
-3. What was the first item from the menu purchased by each customer?
+**3. What was the first item from the menu purchased by each customer?**
 
-  Used DENSE_RANK() over order_date partitioned by customer. Also built an alternate presentation using STRING_AGG() to handle cases where a customer ordered multiple items on the same first day.
+  ##### Used DENSE_RANK() over order_date partitioned by customer. Also built an alternate presentation using STRING_AGG() to handle cases where a customer ordered multiple items on the same first day.
 
+```sql
     	WITH cte AS
-    	(SELECT s.customer_id, m.product_name, DENSE_RANK() OVER(PARTITION BY s.customer_id ORDER BY order_date) AS rn 
-    FROM sales s
-    INNER JOIN menu m ON s.product_id = m.product_id)
+		(SELECT s.customer_id, m.product_name, DENSE_RANK() OVER(PARTITION BY s.customer_id ORDER BY order_date) AS rn 
+    	FROM sales s
+    	INNER JOIN menu m ON s.product_id = m.product_id)
 
-    SELECT customer_id, product_name
-    FROM cte
-    WHERE rn = 1
-    GROUP BY customer_id, product_name;
-
+    	SELECT customer_id, product_name
+    	FROM cte
+    	WHERE rn = 1
+    	GROUP BY customer_id, product_name;
+```
+ 
  Alternate Presentation
 
-    WITH cte AS
-    (SELECT DISTINCT s.customer_id, m.product_name, DENSE_RANK() OVER(PARTITION BY s.customer_id ORDER BY order_date) AS rn 
-    FROM sales s
-    INNER JOIN menu m ON s.product_id = m.product_id)
+```sql
+    	WITH cte AS
+    	(SELECT DISTINCT s.customer_id, m.product_name, DENSE_RANK() OVER(PARTITION BY s.customer_id ORDER BY order_date) AS rn 
+    	FROM sales s
+    	INNER JOIN menu m ON s.product_id = m.product_id)
 
-    SELECT customer_id, STRING_AGG(product_name, ', ') as first_ordered_products
-    FROM cte
-    WHERE rn = 1
-    GROUP BY customer_id;
+    	SELECT customer_id, STRING_AGG(product_name, ', ') as first_ordered_products
+    	FROM cte
+    	WHERE rn = 1
+    	GROUP BY customer_id;
+```
 
-Analysis: Customer A ordered Curry and Sushi for their first order while Customer B ordered only curry and Customer C ordered Ramen.
+*Analysis: Customer A ordered Curry and Sushi for their first order while Customer B ordered only curry and Customer C ordered Ramen.*
 
 
 -- 4. What is the most purchased item on the menu and how many times was it purchased by all customers?
