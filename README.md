@@ -45,11 +45,12 @@ This is Case Study #1 from Danny Ma's [8 Week SQL Challenge](https://8weeksqlcha
        	FROM sales s
        	INNER JOIN menu m ON s.product_id = m.product_id
        	GROUP BY s.customer_id;
+   		```
 
    Analysis - Customer A & B are primary drivers of the revenue, representing highest total spendings while customer C's contribution to the revenue is quite low. 
 
 
-2. How many days has each customer visited the restaurant?
+3. How many days has each customer visited the restaurant?
 
   Used COUNT(DISTINCT order_date) - a deliberate choice over COUNT(*) to avoid double counting same day multiple orders as separate visits
 		```sql
