@@ -47,7 +47,8 @@ This is Case Study #1 from Danny Ma's [8 Week SQL Challenge](https://8weeksqlcha
 	GROUP BY s.customer_id;
 ```
 
-   *Analysis - Customer A & B are primary drivers of the revenue, representing highest total spendings while customer C's contribution to the revenue is quite low.*
+  *Analysis - Customer A & B are primary drivers of the revenue, representing highest total spendings while customer C's contribution to the revenue is quite low.*
+
 
 
 **2. How many days has each customer visited the restaurant?**
@@ -55,12 +56,13 @@ This is Case Study #1 from Danny Ma's [8 Week SQL Challenge](https://8weeksqlcha
   ##### Used COUNT(DISTINCT order_date) - a deliberate choice over COUNT(*) to avoid double counting same day multiple orders as separate visits
 
 ```sql
-        SELECT customer_id, COUNT(DISTINCT order_date) AS days_visited
-        FROM sales
-        GROUP BY customer_id;
+ 	SELECT customer_id, COUNT(DISTINCT order_date) AS days_visited
+ 	FROM sales
+	GROUP BY customer_id;
 ```
   
   *Analysis: Customers A & B are more frequent visitors compared to Customer C, who has visited only twice. This aligns with previous observation regarding contribution to revenue.*
+
 
 
 **3. What was the first item from the menu purchased by each customer?**
@@ -68,15 +70,15 @@ This is Case Study #1 from Danny Ma's [8 Week SQL Challenge](https://8weeksqlcha
   ##### Used DENSE_RANK() over order_date partitioned by customer. Also built an alternate presentation using STRING_AGG() to handle cases where a customer ordered multiple items on the same first day.
 
 ```sql
-    	WITH cte AS
-		(SELECT s.customer_id, m.product_name, DENSE_RANK() OVER(PARTITION BY s.customer_id ORDER BY order_date) AS rn 
-    	FROM sales s
-    	INNER JOIN menu m ON s.product_id = m.product_id)
+	WITH cte AS
+	(SELECT s.customer_id, m.product_name, DENSE_RANK() OVER(PARTITION BY s.customer_id ORDER BY order_date) AS rn 
+    FROM sales s
+    INNER JOIN menu m ON s.product_id = m.product_id)
 
-    	SELECT customer_id, product_name
-    	FROM cte
-    	WHERE rn = 1
-    	GROUP BY customer_id, product_name;
+    SELECT customer_id, product_name
+    FROM cte
+    WHERE rn = 1
+    GROUP BY customer_id, product_name;
 ```
  
  Alternate Presentation
