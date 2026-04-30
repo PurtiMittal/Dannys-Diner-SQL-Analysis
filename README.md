@@ -40,6 +40,7 @@ This is Case Study #1 from Danny Ma's [8 Week SQL Challenge](https://8weeksqlcha
 
    ##### Simple join between sales and menu, grouped by customer.
 
+
 	```sql
 		SELECT s.customer_id, SUM(m.price) AS total_spent
        	FROM sales s
@@ -48,6 +49,7 @@ This is Case Study #1 from Danny Ma's [8 Week SQL Challenge](https://8weeksqlcha
 	 ```
 
    *Analysis - Customer A & B are primary drivers of the revenue, representing highest total spendings while customer C's contribution to the revenue is quite low.*
+
 
 
 **2. How many days has each customer visited the restaurant?**
