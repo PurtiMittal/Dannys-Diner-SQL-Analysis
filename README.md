@@ -34,11 +34,11 @@ This is Case Study #1 from Danny Ma's [8 Week SQL Challenge](https://8weeksqlcha
 
 ## Questions Answered
 
-#### Core Analysis (10 Questions)
+### Core Analysis (10 Questions)
 
-**1. What is the total amount each customer spent at the restaurant?**
+#### 1. What is the total amount each customer spent at the restaurant?
 
-   ##### Simple join between sales and menu, grouped by customer.
+Simple join between sales and menu, grouped by customer.
 
 ```sql
 	SELECT s.customer_id, SUM(m.price) AS total_spent
@@ -51,9 +51,9 @@ This is Case Study #1 from Danny Ma's [8 Week SQL Challenge](https://8weeksqlcha
 
 
 
-**2. How many days has each customer visited the restaurant?**
+#### 2. How many days has each customer visited the restaurant?
 
-  ##### Used COUNT(DISTINCT order_date) - a deliberate choice over COUNT(*) to avoid double counting same day multiple orders as separate visits
+Used COUNT(DISTINCT order_date) - a deliberate choice over COUNT(*) to avoid double counting same day multiple orders as separate visits
 
 ```sql
  	SELECT customer_id, COUNT(DISTINCT order_date) AS days_visited
@@ -65,9 +65,9 @@ This is Case Study #1 from Danny Ma's [8 Week SQL Challenge](https://8weeksqlcha
 
 
 
-**3. What was the first item from the menu purchased by each customer?**
+#### 3. What was the first item from the menu purchased by each customer?
 
-  ##### Used DENSE_RANK() over order_date partitioned by customer. Also built an alternate presentation using STRING_AGG() to handle cases where a customer ordered multiple items on the same first day.
+Used DENSE_RANK() over order_date partitioned by customer. Also built an alternate presentation using STRING_AGG() to handle cases where a customer ordered multiple items on the same first day.
 
 ```sql
 	WITH cte AS
@@ -98,7 +98,8 @@ This is Case Study #1 from Danny Ma's [8 Week SQL Challenge](https://8weeksqlcha
 *Analysis: Customer A ordered Curry and Sushi for their first order while Customer B ordered only curry and Customer C ordered Ramen.*
 
 
--- 4. What is the most purchased item on the menu and how many times was it purchased by all customers?
+#### 4. What is the most purchased item on the menu and how many times was it purchased by all customers?
+
 WITH total_purchases AS
 (SELECT m.product_name, COUNT(s.product_id) AS purchased_times, DENSE_RANK() OVER(ORDER BY COUNT(s.product_id) DESC) AS rn 
 FROM sales s
