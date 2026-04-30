@@ -36,9 +36,9 @@ This is Case Study #1 from Danny Ma's [8 Week SQL Challenge](https://8weeksqlcha
 
 #### Core Analysis (10 Questions)
 
-1. What is the total amount each customer spent at the restaurant?
+**1. What is the total amount each customer spent at the restaurant?**
 
-   Simple join between sales and menu, grouped by customer.
+   ##### Simple join between sales and menu, grouped by customer.
 
 	```sql
 		SELECT s.customer_id, SUM(m.price) AS total_spent
@@ -47,18 +47,19 @@ This is Case Study #1 from Danny Ma's [8 Week SQL Challenge](https://8weeksqlcha
        	GROUP BY s.customer_id;
 	 ```
 
-   Analysis - Customer A & B are primary drivers of the revenue, representing highest total spendings while customer C's contribution to the revenue is quite low. 
+   *Analysis - Customer A & B are primary drivers of the revenue, representing highest total spendings while customer C's contribution to the revenue is quite low.*
 
 
-3. How many days has each customer visited the restaurant?
+**2. How many days has each customer visited the restaurant?**
 
-  Used COUNT(DISTINCT order_date) - a deliberate choice over COUNT(*) to avoid double counting same day multiple orders as separate visits
-		```sql
+  ##### Used COUNT(DISTINCT order_date) - a deliberate choice over COUNT(*) to avoid double counting same day multiple orders as separate visits
+	```sql
         SELECT customer_id, COUNT(DISTINCT order_date) AS days_visited
         FROM sales
         GROUP BY customer_id;
-
-  Analysis: Customers A & B are more frequent visitors compared to Customer C, who has visited only twice. This aligns with previous observation regarding contribution to revenue.
+	 ```
+  
+  *Analysis: Customers A & B are more frequent visitors compared to Customer C, who has visited only twice. This aligns with previous observation regarding contribution to revenue.*
 
 
 3. What was the first item from the menu purchased by each customer?
