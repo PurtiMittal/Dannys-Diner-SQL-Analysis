@@ -40,13 +40,12 @@ This is Case Study #1 from Danny Ma's [8 Week SQL Challenge](https://8weeksqlcha
 
    ##### Simple join between sales and menu, grouped by customer.
 
-
-	```sql
+```sql
 		SELECT s.customer_id, SUM(m.price) AS total_spent
        	FROM sales s
        	INNER JOIN menu m ON s.product_id = m.product_id
        	GROUP BY s.customer_id;
-	 ```
+```
 
    *Analysis - Customer A & B are primary drivers of the revenue, representing highest total spendings while customer C's contribution to the revenue is quite low.*
 
