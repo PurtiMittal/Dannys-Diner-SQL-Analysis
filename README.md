@@ -28,7 +28,7 @@ Danny's Diner is a small Japenese restaurant selling three items - sushi, curry 
 
 This is Case Study #1 from Danny Ma's [8 Week SQL Challenge](https://8weeksqlchallenge.com/case-study-1/). Solved entirely in T-SQL.
 
-## Entity Rel  ationship Diagram
+## Entity Relationship Diagram
 
 ![Entity Relationship Diagram](Images/entity_relationship_diagram.png)
 
@@ -40,6 +40,7 @@ This is Case Study #1 from Danny Ma's [8 Week SQL Challenge](https://8weeksqlcha
 
    Simple join between sales and menu, grouped by customer.
 
+		```sql
 		SELECT s.customer_id, SUM(m.price) AS total_spent
        	FROM sales s
        	INNER JOIN menu m ON s.product_id = m.product_id
