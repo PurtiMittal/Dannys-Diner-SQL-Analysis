@@ -247,7 +247,7 @@ Extended the above with a ranking column - `DENSE_RANK()` partitioned by custome
 
 
 ## How to Run
-- Set up the schema using the `CREATE TABLE` and `INSERT` statements given below
+- Set up the schema using the `CREATE TABLE` and `INSERT` statements given in below link.
 - Run each query block individually or run the [full script provided](Case_Study_1_(Danny's_Diner).sql)
 - Queries are written in T-SQL, tested on SQL Server. Minor syntax adjustments needed for other platforms.
 
